@@ -7,7 +7,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 import base64 #what does base 64 meaning?? Converts files (like Excel) into a format you can download in browser.It converts binary files (like Excel, images) into text format.This helps in downloading files directly from your Streamlit app using an HTML link.
 
 # Load spaCy model
-nlp = spacy.load("en_core_web_sm")
+import spacy.cli
+
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    spacy.cli.download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
+
 
 # Load Datasets
 job_df = pd.read_excel("job_title_des.xlsx")
